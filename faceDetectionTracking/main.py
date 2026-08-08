@@ -28,19 +28,12 @@ if __name__ == "__main__":
     # from it.
     shm = shared_memory.SharedMemory(create=True, size=frame_nbytes)
 
-    # Incremented every time a new frame is written, so the vcam process
-    # can tell when there's something new to send instead of resending a
-    # stale frame.
     frame_id = mp.Value('l', 0)
-
-    # Shared shutdown signal -- either side can set this and both exit.
     stop_event = mp.Event()
 
-    # NOTE: capture_worker (camera + MediaPipe) intentionally runs directly
-    # in THIS process, not spawned. Testing showed camera access breaks
-    # inside a multiprocessing-spawned child on this system, but works
-    # reliably in the main process. Only the virtual camera sender -- which
-    # doesn't need camera permissions -- is spawned as a child process.
+    # NOTE: capture_worker (camera + MediaPipe) runs directly in THIS
+    # process, not spawned.
+    # Only the virtual camera sender -- spawned as a child process.
     vcam_proc = mp.Process(
         target=vcam_worker.run,
         args=(shm.name, frame_shape, frame_id, stop_event, WIDTH, HEIGHT, FPS),

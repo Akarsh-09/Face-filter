@@ -18,14 +18,11 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 def run(shm_name, frame_shape, frame_id, stop_event, width, height, fps,
         camera_index=0, model_path=None, show_local_preview=True):
-    """
-    Runs in its OWN process. Owns the physical camera and the MediaPipe
-    landmarker. Writes each annotated frame into shared memory for the
-    vcam process to pick up -- never touches pyvirtualcam directly, since
-    that must live in a different process (see main.py for why).
-    """
+
     if model_path is None:
         model_path = DEFAULT_MODEL_PATH
+
+    # print(f"SHM name while capturing: {shm_name}")
 
     frame_buffer = {}
     state = {"latest_frame": None, "detection_busy": False}
@@ -34,8 +31,6 @@ def run(shm_name, frame_shape, frame_id, stop_event, width, height, fps,
     shared_arr = np.ndarray(frame_shape, dtype=np.uint8, buffer=shm.buf)
 
     def print_result(result, image, timestamp_ms):
-        # Runs on a MediaPipe worker thread within this process.
-        # No GUI calls here -- same rule as before.
         rgb_frame = frame_buffer.pop(timestamp_ms, None)
         if rgb_frame is None:
             state["detection_busy"] = False
@@ -75,9 +70,6 @@ def run(shm_name, frame_shape, frame_id, stop_event, width, height, fps,
 
             display_frame = state["latest_frame"] if state["latest_frame"] is not None else frame
 
-            # Defensive: make sure what we write always matches the shared
-            # buffer's fixed shape, in case a frame ever comes back an
-            # unexpected size.
             if display_frame.shape != frame_shape:
                 display_frame = cv2.resize(display_frame, (width, height))
 

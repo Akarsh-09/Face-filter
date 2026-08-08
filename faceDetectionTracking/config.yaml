@@ -5,7 +5,7 @@ camera:
   fps: 60
 
 display:
-  show_local_preview: false
+  show_local_preview: true
 
 model:
   path: model/face_landmarker.task
