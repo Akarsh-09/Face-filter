@@ -18,6 +18,7 @@ FPS = config['camera']['fps']
 CAMERA_INDEX = config['camera']['index']
 SHOW_LOCAL_PREVIEW = config['display']['show_local_preview']
 MODEL_PATH = os.path.join(current_dir, config['model']['path'])
+MASK_CONFIG = config.get('mask', {'enabled': False})
 
 if __name__ == "__main__":
     frame_shape = (HEIGHT, WIDTH, 3)
@@ -45,6 +46,7 @@ if __name__ == "__main__":
             shm.name, frame_shape, frame_id, stop_event,
             WIDTH, HEIGHT, FPS, CAMERA_INDEX,
             model_path=MODEL_PATH, show_local_preview=SHOW_LOCAL_PREVIEW,
+            mask_config=MASK_CONFIG,
         )
     except KeyboardInterrupt:
         stop_event.set()

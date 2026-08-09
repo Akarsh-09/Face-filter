@@ -1,7 +1,7 @@
 import cv2 as cv
 import time
 
-def openCamera(width=1280, height=720, fps=30, camera_index=1):
+def openCamera(width=1920, height=1080, fps=60, camera_index=1):
     cap = cv.VideoCapture(camera_index)
 
     cap.set(cv.CAP_PROP_FRAME_WIDTH, width)

@@ -9,3 +9,11 @@ display:
 
 model:
   path: model/face_landmarker.task
+
+mask:
+  enabled: true
+  image_path: masks/CA.png
+  top_padding_ratio: 0.55
+  bottom_padding_ratio: 0.10
+  horizontal_padding_ratio: 0.90
+  vertical_offset_ratio: 0.0
