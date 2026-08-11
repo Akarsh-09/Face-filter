@@ -2,7 +2,7 @@
 
 # For Spiderman:
 
-  image_path: masks/Spiderman.png
+  image_path: assets/masks/Spiderman.png
   top_padding_ratio: 0.30
   bottom_padding_ratio: 0.20
   horizontal_padding_ratio: 0.35
@@ -11,7 +11,7 @@
 
 # For Ironman:
 
-  image_path: masks/Ironman.png
+  image_path: assets/masks/Ironman.png
   top_padding_ratio: 0.60
   bottom_padding_ratio: 0.25
   horizontal_padding_ratio: 0.55
@@ -20,7 +20,7 @@
 
 # For Captain America:
 
-  image_path: masks/CA.png
+  image_path: assets/masks/CA.png
   top_padding_ratio: 0.55
   bottom_padding_ratio: 0.10
   horizontal_padding_ratio: 0.90
